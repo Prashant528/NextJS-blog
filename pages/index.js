@@ -6,16 +6,23 @@ import MyDate from '../components/date'
 import { getSortedPostsData } from '../lib/post'
 
 export async function getStaticProps() {
+
+    // testing fetching data from the apis within next itself.
+    const res = await fetch(`http://localhost:3000/api/hello`)
+    const data = await res.json()
+
   const allPostsData = getSortedPostsData()
   return {
     props: {
-      allPostsData
+      allPostsData,
+      data
     }
   }
 }
 
 
-export default function Home({ allPostsData }) {
+export default function Home({ allPostsData , data}) {
+
   return (
     <Layout home>
       <Head>
@@ -23,7 +30,8 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>Hello I am a self-learning Next developer from Kathmandu, Nepal.</p>
-
+        <p>This is the data I've fetched from its own API:</p>
+        <p>Text:{data.name} {''} Color:{ data.color}</p>
       </section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
